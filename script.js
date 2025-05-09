@@ -151,3 +151,91 @@ window.addEventListener('scroll', function () {
 
     lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Scroll position ko update karna
 }, false);
+
+// document.querySelector('form[name="submit-to-google-sheet"]').addEventListener('submit', function(e) {
+//     const name = document.querySelector('input[name="Name"]');
+//     const email = document.querySelector('input[name="Email Address"]');
+//     const mobile = document.querySelector('input[name="Mobile Number"]');
+//     const subject = document.querySelector('input[name="Email Subject"]');
+//     const message = document.querySelector('textarea[name="Your Message"]');
+   
+//     // Regex rules
+//     const nameRegex = /^[A-Za-z\s]+$/;
+//     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+//     const mobileRegex = /^\d{10}$/;
+//     const textRegex = /^[A-Za-z0-9\s.,!?'-]+$/;
+   
+//     // Trim values
+//     name.value = name.value.trim();
+//     email.value = email.value.trim();
+//     mobile.value = mobile.value.trim();
+//     subject.value = subject.value.trim();
+//     message.value = message.value.trim();
+   
+//     // Validate name
+//     if (!nameRegex.test(name.value) || /\d|[^A-Za-z\s]/.test(name.value)) {
+//     alert('Please enter a valid name without numbers or special characters.');
+//     e.preventDefault();
+//     return;
+//     }
+   
+//     // Validate email
+//     if (!emailRegex.test(email.value)) {
+//     alert('Please enter a valid email address.');
+//     e.preventDefault();
+//     return;
+//     }
+   
+//     // Validate mobile
+//     if (!mobileRegex.test(mobile.value)) {
+//     alert('Please enter a valid 10-digit mobile number.');
+//     e.preventDefault();
+//     return;
+//     }
+   
+//     // Validate subject
+//     if (!textRegex.test(subject.value)) {
+//     alert('Subject should not contain special characters.');
+//     e.preventDefault();
+//     return;
+//     }
+   
+//     // Validate message
+//     if (!textRegex.test(message.value)) {
+//     alert('Message should not contain invalid special characters.');
+//     e.preventDefault();
+//     return;
+//     }
+//    });
+document.querySelector('form[name="submit-to-google-sheet"]').addEventListener('submit', function (e) {
+    const fields = [
+        { name: 'Name', regex: /^[A-Za-z\s]+$/, error: 'Please enter a valid name without numbers or special characters.' },
+        { name: 'Email Address', regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, error: 'Please enter a valid email address.' },
+        { name: 'Mobile Number', regex: /^\d{10}$/, error: 'Please enter a valid 10-digit mobile number.' },
+        { name: 'Email Subject', regex: /^[A-Za-z0-9\s.,!?'-]+$/, error: 'Subject should not contain special characters.' },
+        { name: 'Your Message', regex: /^[A-Za-z0-9\s.,!?'-]+$/, error: 'Message should not contain invalid special characters.' }
+    ];
+
+    for (const field of fields) {
+        const input = document.querySelector(`[name="${field.name}"]`);
+        input.value = input.value.trim();
+        if (!field.regex.test(input.value)) {
+            alert(field.error);
+            e.preventDefault();
+            return;
+        }
+    }
+});
+
+const topButton = document.querySelector('.footer-iconTop');
+const homeSection = document.querySelector('#home');
+
+window.addEventListener('scroll', () => {
+    const homeBottom = homeSection.getBoundingClientRect().bottom;
+
+    if (homeBottom < window.innerHeight * 0.9) {
+        topButton.classList.add('show');
+    } else {
+        topButton.classList.remove('show');
+    }
+});
